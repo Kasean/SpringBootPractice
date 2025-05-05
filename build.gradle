@@ -2,8 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'application'
-	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.kasean'
@@ -29,110 +27,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-mainClassName = 'com.kasean.spring.boot.homework.Application'
-
-application {
-	mainClass = mainClassName
-}
-
-shadowJar {
-	archiveBaseName.set('homework-app')
-	archiveClassifier.set('')
-	archiveVersion.set(version)
-	mergeServiceFiles()
-	zip64 true
-
-	manifest {
-		attributes 'Main-Class': mainClassName
-	}
-}
-
-tasks.build {
-	dependsOn shadowJar
-}
-
-def profiles = ['task1']
-
-profiles.each { profile ->
-	def buildDir = project.buildDir
-	def profileDir = "${buildDir}/package-${profile}"
-	def appDir = "${profileDir}/app"
-
-	// Creating a task to prepare files
-	tasks.register("prepareFilesFor${profile.capitalize()}", Copy) {
-		dependsOn shadowJar
-
-		from shadowJar.archiveFile.get().asFile
-		into appDir
-
-		from('src/main/resources') {
-			include "application-${profile}.yaml"
-			include "application.yaml"
-			include "logback-${profile}.xml"
-		}
-		into appDir
-	}
-
-	// Creating a task to generate scripts
-	tasks.register("generateScriptsFor${profile.capitalize()}", DefaultTask) {
-		dependsOn "prepareFilesFor${profile.capitalize()}"
-
-		doLast {
-			def scriptDir = "${profileDir}/scripts"
-			mkdir(scriptDir)
-
-			// Creating Linux script
-			def linuxScript = file("${scriptDir}/start-${profile}.sh")
-			linuxScript.text = """#!/bin/bash
-export SPRING_PROFILES_ACTIVE=${profile}
-java -jar app/homework-app-1.0.0.jar
-"""
-			linuxScript.setExecutable(true)
-
-			// Creating Windows script
-			def windowsScript = file("${scriptDir}/start-${profile}.bat")
-			windowsScript.text = """@echo off
-set SPRING_PROFILES_ACTIVE=${profile}
-java -jar app\\homework-app-1.0.0.jar
-"""
-		}
-	}
-
-	// Creating a task to create ZIP archive
-	tasks.register("zip${profile.capitalize()}", Zip) {
-		dependsOn "generateScriptsFor${profile.capitalize()}"
-		archiveBaseName.set("package-${profile}")
-		destinationDirectory.set(file(buildDir))
-		from(profileDir)
-	}
-
-	// Creating a task to create TAR.GZ archive
-	tasks.register("tar${profile.capitalize()}", Tar) {
-		dependsOn "generateScriptsFor${profile.capitalize()}"
-		archiveBaseName.set("package-${profile}")
-		destinationDirectory.set(file(buildDir))
-		compression = Compression.GZIP
-		from(profileDir)
-	}
-}
-
-tasks.register('createTaskZips') {
-	profiles.each { profile ->
-		dependsOn "zip${profile.capitalize()}"
-		dependsOn "tar${profile.capitalize()}"
-	}
-}
-
-import groovy.io.FileType
-
-class WriteTask extends DefaultTask {
-	File scriptFile
-	String text
-
-	@TaskAction
-	def write() {
-		scriptFile.write(text)
-	}
 }
