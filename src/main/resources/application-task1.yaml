@@ -1,2 +1,2 @@
 logging:
-  config: classpath:logback-task1.xml
+  config: classpath:logback/logback-task1.xml
