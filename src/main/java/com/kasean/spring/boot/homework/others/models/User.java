@@ -10,7 +10,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     private String name;
 
@@ -18,7 +18,6 @@ public class User {
     }
 
     public User(CreateUserRequest request) {
-        this.id = UUID.randomUUID();
         this.name = request.getName();
     }
 

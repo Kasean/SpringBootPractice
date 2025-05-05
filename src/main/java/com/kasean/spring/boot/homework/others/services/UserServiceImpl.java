@@ -23,37 +23,30 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(CreateUserRequest request) {
-        var user = new User(request);
-        return userRepository.save(user);
+        return userRepository.save(new User(request));
     }
 
     @Override
     public User getUser(UUID id) {
-        var userOptional = userRepository.findById(id);
-        return userOptional.orElse(null);
+        return userRepository.findById(id).orElse(null);
 
     }
 
     @Override
     public User updateUser(UUID id, UpdateUserRequest request) {
-        var userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty())
-            return null;
-
-        var user = userOptional.get();
-        user.setName(request.getNewName());
-        userRepository.save(user);
-        LOGGER.info("User {} old name updated to {}.", id, request.getNewName());
-        return user;
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setName(request.getNewName());
+                    LOGGER.info("User {} old name updated to {}.", id, request.getNewName());
+                    return userRepository.save(user);
+                }).orElse(null);
     }
 
     @Override
     public User deleteUser(UUID id) {
-        var userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty())
-            return null;
-
-        userRepository.delete(userOptional.get());
-        return userOptional.get();
+        return userRepository.findById(id).map(user -> {
+            userRepository.delete(user);
+            return user;
+        }).orElse(null);
     }
 }
