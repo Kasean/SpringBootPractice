@@ -1,0 +1,5 @@
+spring:
+  profiles: task1
+
+logging:
+  config: classpath:logback-task1.xml
