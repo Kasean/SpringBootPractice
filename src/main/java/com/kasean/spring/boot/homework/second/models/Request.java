@@ -8,7 +8,6 @@ import java.util.UUID;
 public class Request {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String description;

@@ -1,17 +1,26 @@
 package com.kasean.spring.boot.homework.second.models;
 
+import com.kasean.spring.boot.homework.second.controllers.models.CreateUserRequest;
 import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String name;
+
+    public User() {
+    }
+
+    public User(CreateUserRequest request) {
+        this.id = UUID.randomUUID();
+        this.name = request.getName();
+    }
 
     public UUID getId() {
         return id;
