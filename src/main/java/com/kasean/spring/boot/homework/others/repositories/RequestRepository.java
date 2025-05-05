@@ -1,6 +1,6 @@
-package com.kasean.spring.boot.homework.second.repositories;
+package com.kasean.spring.boot.homework.others.repositories;
 
-import com.kasean.spring.boot.homework.second.models.Request;
+import com.kasean.spring.boot.homework.others.models.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

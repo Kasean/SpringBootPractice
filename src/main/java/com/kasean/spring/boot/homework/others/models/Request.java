@@ -1,4 +1,4 @@
-package com.kasean.spring.boot.homework.second.models;
+package com.kasean.spring.boot.homework.others.models;
 
 import jakarta.persistence.*;
 

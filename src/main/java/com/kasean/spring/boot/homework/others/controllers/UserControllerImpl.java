@@ -1,9 +1,9 @@
-package com.kasean.spring.boot.homework.second.controllers;
+package com.kasean.spring.boot.homework.others.controllers;
 
-import com.kasean.spring.boot.homework.second.controllers.models.CreateUserRequest;
-import com.kasean.spring.boot.homework.second.controllers.models.UpdateUserRequest;
-import com.kasean.spring.boot.homework.second.models.User;
-import com.kasean.spring.boot.homework.second.services.UserService;
+import com.kasean.spring.boot.homework.others.controllers.models.CreateUserRequest;
+import com.kasean.spring.boot.homework.others.controllers.models.UpdateUserRequest;
+import com.kasean.spring.boot.homework.others.models.User;
+import com.kasean.spring.boot.homework.others.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

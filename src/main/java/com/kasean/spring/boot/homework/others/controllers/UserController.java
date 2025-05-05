@@ -1,9 +1,8 @@
-package com.kasean.spring.boot.homework.second.controllers;
+package com.kasean.spring.boot.homework.others.controllers;
 
-import com.kasean.spring.boot.homework.second.controllers.models.CreateUserRequest;
-import com.kasean.spring.boot.homework.second.controllers.models.UpdateUserRequest;
-import com.kasean.spring.boot.homework.second.models.User;
-import org.hibernate.sql.Update;
+import com.kasean.spring.boot.homework.others.controllers.models.CreateUserRequest;
+import com.kasean.spring.boot.homework.others.controllers.models.UpdateUserRequest;
+import com.kasean.spring.boot.homework.others.models.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

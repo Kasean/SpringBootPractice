@@ -1,4 +1,4 @@
-package com.kasean.spring.boot.homework.second.controllers.models;
+package com.kasean.spring.boot.homework.others.controllers.models;
 
 public class UpdateUserRequest {
     private String newName;

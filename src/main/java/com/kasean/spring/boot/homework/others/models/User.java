@@ -1,6 +1,6 @@
-package com.kasean.spring.boot.homework.second.models;
+package com.kasean.spring.boot.homework.others.models;
 
-import com.kasean.spring.boot.homework.second.controllers.models.CreateUserRequest;
+import com.kasean.spring.boot.homework.others.controllers.models.CreateUserRequest;
 import jakarta.persistence.*;
 
 import java.util.UUID;
