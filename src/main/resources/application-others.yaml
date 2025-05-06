@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
+    default-schema: PUBLIC
+  security:
+    security:
+      oauth2:
+        client:
+          registration:
+            github:
+              client-id: 50bbc49d9e18520a2c6b
+              client-secret: 623d6e32569562b88aeff7c9518cf00ca26c285d
+              scope: read:user
+
+logging:
+  config: classpath:logback/logback-others.xml
