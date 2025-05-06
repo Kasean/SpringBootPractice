@@ -1,6 +1,6 @@
 <configuration>
     <springProfile name="default,task1">
-        <property name="LOG_FILE" value="logs/task2.log" />
+        <property name="LOG_FILE" value="logs/task2-7.log" />
 
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -17,6 +17,7 @@
 
         <logger name="UserController" level="DEBUG"/>
         <logger name="UserService" level="DEBUG"/>
+        <logger name="JwtTokenService" level="DEBUG"/>
 
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>

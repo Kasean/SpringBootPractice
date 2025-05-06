@@ -6,6 +6,8 @@ import com.kasean.spring.boot.homework.others.models.User;
 import com.kasean.spring.boot.homework.others.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -30,7 +32,7 @@ public class UserControllerImpl implements UserController{
     }
 
     @Override
-    public User getUser(UUID id) {
+    public User getUser(UUID id, OAuth2User jwt) {
         LOGGER.info("Searching user...");
         var user = userService.getUser(id);
         LOGGER.info("User with id {} {}", id, user != null ? "founded." : "not founded.");
@@ -38,7 +40,7 @@ public class UserControllerImpl implements UserController{
     }
 
     @Override
-    public User updateUser(UUID id, UpdateUserRequest request) {
+    public User updateUser(UUID id, UpdateUserRequest request, OAuth2User jwt) {
         LOGGER.info("Updating user...");
         var user = userService.updateUser(id, request);
         LOGGER.info("User with id {} {}", id, user != null ? "updated." : "not updated.");
@@ -51,5 +53,14 @@ public class UserControllerImpl implements UserController{
         var user = userService.deleteUser(id);
         LOGGER.info("User with id {} {}", id, user != null ? "deleted." : "not deleted.");
         return user;
+    }
+
+    @Override
+    public User getCurrentUser(OAuth2User jwt) {
+        var createRequest = new CreateUserRequest();
+        createRequest.setName(jwt.getName());
+        var newUser = userService.createUser(createRequest);
+        LOGGER.info("User {} created.", newUser.getName());
+        return newUser;
     }
 }

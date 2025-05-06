@@ -58,7 +58,7 @@ class UserControllerIntegrationTest {
 
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
 
-        userController.getUser(id);
+        userController.getUser(id, any());
 
         verify(userRepository, times(1)).findById(id);
     }
@@ -76,7 +76,7 @@ class UserControllerIntegrationTest {
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        userController.updateUser(id, request);
+        userController.updateUser(id, request, any());
 
         verify(userRepository, times(1)).findById(id);
         verify(userRepository, times(1)).save(any(User.class));
